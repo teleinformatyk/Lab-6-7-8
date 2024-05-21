@@ -1,0 +1,66 @@
+name: Build Exe
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+
+    - name: Install dependencies
+      run: pip install pyinstaller
+
+    - name: Build exe for pars.py
+      run: pyinstaller --onefile pars.py
+      working-directory: ${{ github.workspace }}
+
+    - name: Build exe for json_składnia.py
+      run: pyinstaller --onefile json_składnia.py
+      working-directory: ${{ github.workspace }}
+
+    - name: Build exe for json_zgodność.py
+      run: pyinstaller --onefile json_zgodność.py
+      working-directory: ${{ github.workspace }}
+
+    - name: Build exe for yaml_weryfikacja.py
+      run: pyinstaller --onefile yaml_weryfikacja.py
+      working-directory: ${{ github.workspace }}
+
+    - name: Build exe for yaml_zgodność.py
+      run: pyinstaller --onefile yaml_zgodność.py
+      working-directory: ${{ github.workspace }}
+
+    - name: Build exe for xml_weryfikacja.py
+      run: pyinstaller --onefile xml_weryfikacja.py
+      working-directory: ${{ github.workspace }}
+
+    - name: Build exe for xml_zgodność.py
+      run: pyinstaller --onefile xml_zgodność.py
+      working-directory: ${{ github.workspace }}
+
+    - name: Upload exe files
+      uses: actions/upload-artifact@v2
+      with:
+        name: exe-files
+        path: |
+          pars/dist/
+          json_składnia/dist/
+          json_zgodność/dist/
+          yaml_weryfikacja/dist/
+          yaml_zgodność/dist/
+          xml_weryfikacja/dist/
+          xml_zgodność/dist/
