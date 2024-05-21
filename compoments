@@ -1,0 +1,14 @@
+#!/bin/bash
+
+packages=(
+    "xmltodict"
+    "pyinstaller"
+    "json"
+    "yaml"
+)
+
+for package in "${packages[@]}"; do
+    echo "Installing $package..."
+    pip install $package
+    echo "pip install $package" >> install_commands.txt
+done
